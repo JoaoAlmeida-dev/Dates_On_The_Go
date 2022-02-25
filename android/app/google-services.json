@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1037504246378",
+    "project_id": "datesonthego-7edc6",
+    "storage_bucket": "datesonthego-7edc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037504246378:android:c3a3057326c714a1509013",
+        "android_client_info": {
+          "package_name": "com.datesonthego.dates_on_the_go"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037504246378-r7kcu8n82m6f902ast1jm4htgvn55q9n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnLdJQpU-a-TAGV2pi7tkJ5Boo7e6Fkmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037504246378-r7kcu8n82m6f902ast1jm4htgvn55q9n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
