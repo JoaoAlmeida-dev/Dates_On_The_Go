@@ -1,50 +1,49 @@
-import 'package:dates_on_the_go/services/google_sign_in_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dates_on_the_go/widgets/menu_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
-class LoggedInWidget extends StatelessWidget {
-  const LoggedInWidget({Key? key}) : super(key: key);
+import '../models/menu_item.dart';
+import '../models/menu_items.dart';
+import 'main_widget.dart';
+
+class LoggedInWidget extends StatefulWidget {
+  LoggedInWidget({Key? key}) : super(key: key);
+
+  @override
+  State<LoggedInWidget> createState() => _LoggedInWidgetState();
+}
+
+class _LoggedInWidgetState extends State<LoggedInWidget> {
+  MenuItem currentItem = MenuItems.profile;
 
   @override
   Widget build(BuildContext context) {
-    final User user = FirebaseAuth.instance.currentUser!;
-    TextStyle textstyle = const TextStyle(fontSize: 16);
-
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          TextButton(
-            child: Text('Logout'),
-            onPressed: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.googleLogout();
-            },
-          )
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(),
-            Text(
-              'Profile',
-              style: textstyle,
-            ),
-            const Spacer(),
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(user.photoURL!),
-            ),
-            const Spacer(),
-            Text('Name: ' + user.displayName.toString(), style: textstyle),
-            Text('Email: ' + user.email.toString(), style: textstyle),
-            const Spacer(),
-          ],
-        ),
-      ),
+    return ZoomDrawer(
+      style: DrawerStyle.Style1,
+      borderRadius: 40,
+      slideWidth: MediaQuery.of(context).size.width * 0.6,
+      angle: -5,
+      showShadow: true,
+      shadowLayer1Color: Theme.of(context).primaryColor,
+      shadowLayer2Color: Theme.of(context).backgroundColor,
+      mainScreen: getScreen(),
+      menuScreen: Builder(builder: (context) {
+        return MenuWidget(
+            currentItem: currentItem,
+            onSelectedItem: (item) {
+              setState(() => currentItem = item);
+              ZoomDrawer.of(context)!.close();
+            });
+      }),
     );
+  }
+
+  Widget getScreen() {
+    switch (currentItem) {
+      case MenuItems.profile:
+        return ProfileWidget();
+      default:
+        return ProfileWidget();
+    }
   }
 }
