@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/menu_item.dart';
 import '../models/menu_items.dart';
+import '../services/google_sign_in_provider.dart';
 
 class MenuWidget extends StatelessWidget {
   const MenuWidget(
@@ -25,11 +27,21 @@ class MenuWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 menuHeader(),
-                const Spacer(),
+                const Spacer(flex: 1),
                 ...MenuItems.all.map(buildMenuItem).toList(),
                 const Spacer(
                   flex: 2,
                 ),
+                ListTile(
+                  minLeadingWidth: 5,
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  onTap: () {
+                    final provider = Provider.of<GoogleSignInProvider>(context,
+                        listen: false);
+                    provider.googleLogout();
+                  },
+                )
               ],
             ),
           ),
@@ -77,7 +89,7 @@ class MenuWidget extends StatelessWidget {
                 Text(user.displayName.toString()),
                 Text(user.email.toString()),
               ],
-            )
+            ),
           ],
         ),
       );
