@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:provider/provider.dart';
-
-import '../services/google_sign_in_provider.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({Key? key}) : super(key: key);
@@ -16,16 +13,6 @@ class ProfileWidget extends StatelessWidget {
       appBar: AppBar(
         leading: const MenuWidgetButton(),
         title: const Text('User Profile'),
-        actions: [
-          TextButton(
-            child: const Text('Logout'),
-            onPressed: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              provider.googleLogout();
-            },
-          )
-        ],
       ),
       body: Center(
         child: Column(
