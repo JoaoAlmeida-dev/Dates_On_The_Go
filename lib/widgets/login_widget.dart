@@ -36,7 +36,7 @@ class LoginWidget extends StatelessWidget {
               minimumSize: const Size(double.infinity, 50),
             ),
           ),
-          RichText(
+          /*RichText(
             text: const TextSpan(text: 'Already have an account? ', children: [
               TextSpan(
                   text: 'Log In',
@@ -47,7 +47,7 @@ class LoginWidget extends StatelessWidget {
           ),
           const SizedBox(
             height: 40,
-          ),
+          ),*/
         ],
       ),
     );
