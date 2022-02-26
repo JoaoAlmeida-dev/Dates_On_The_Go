@@ -26,22 +26,13 @@ class MenuWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                menuHeader(),
+                MenuHeader(),
                 const Spacer(flex: 1),
-                ...MenuItems.all.map(buildMenuItem).toList(),
+                ...MenuItems.all.map(BuildMenuItem).toList(),
                 const Spacer(
                   flex: 2,
                 ),
-                ListTile(
-                  minLeadingWidth: 5,
-                  leading: const Icon(Icons.logout),
-                  title: const Text('Logout'),
-                  onTap: () {
-                    final provider = Provider.of<GoogleSignInProvider>(context,
-                        listen: false);
-                    provider.googleLogout();
-                  },
-                )
+                LogoutListTile(),
               ],
             ),
           ),
@@ -50,53 +41,54 @@ class MenuWidget extends StatelessWidget {
     );
   }
 
-  Widget menuHeader() {
+  Widget MenuHeader() {
     final User user = FirebaseAuth.instance.currentUser!;
     return Builder(builder: (context) {
       MediaQueryData mediaQueryData = MediaQuery.of(context);
-      double width = mediaQueryData.size.width;
+      double screenWidth = mediaQueryData.size.width;
       double heigth = mediaQueryData.size.height;
 
-      return SizedBox(
-        width: width * 0.4,
-        //height: heigth * 0.2,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(140),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).primaryColorDark,
-                    spreadRadius: 3,
-                    blurRadius: 2,
-                    //offset: const Offset(0, 3),
-                  ),
-                ],
+      return Padding(
+        padding: EdgeInsets.all(10),
+        child: SizedBox(
+          width: screenWidth * 0.4,
+          //height: heigth * 0.2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(140),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).primaryColorDark,
+                      spreadRadius: 3,
+                      blurRadius: 2,
+                      //offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: CircleAvatar(
+                  radius: screenWidth * (0.25 / 3),
+                  backgroundImage: NetworkImage(user.photoURL!),
+                ),
               ),
-              child: CircleAvatar(
-                radius: width * (0.25 / 3),
-                backgroundImage: NetworkImage(user.photoURL!),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(user.displayName.toString()),
-                Text(user.email.toString()),
-              ],
-            ),
-          ],
+              SizedBox(
+                width: screenWidth * 0.3,
+                child: Text(user.displayName.toString()),
+              ),
+            ],
+          ),
         ),
       );
     });
   }
 
-  Widget buildMenuItem(MenuItem item) => Builder(builder: (context) {
+  Widget BuildMenuItem(MenuItem item) => Builder(builder: (context) {
         return ListTileTheme(
           selectedColor: Theme.of(context).toggleableActiveColor,
           child: ListTile(
@@ -109,6 +101,19 @@ class MenuWidget extends StatelessWidget {
               onSelectedItem(item);
             },
           ),
+        );
+      });
+
+  Widget LogoutListTile() => Builder(builder: (context) {
+        return ListTile(
+          minLeadingWidth: 5,
+          leading: const Icon(Icons.logout),
+          title: const Text('Logout'),
+          onTap: () {
+            final provider =
+                Provider.of<GoogleSignInProvider>(context, listen: false);
+            provider.googleLogout();
+          },
         );
       });
 }

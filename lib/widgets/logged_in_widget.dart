@@ -4,7 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 import '../models/menu_item.dart';
 import '../models/menu_items.dart';
-import 'main_widget.dart';
+import '../pages/profile_widget.dart';
 
 class LoggedInWidget extends StatefulWidget {
   LoggedInWidget({Key? key}) : super(key: key);

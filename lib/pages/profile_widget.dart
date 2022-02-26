@@ -1,19 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:logger/logger.dart';
+
+import '../widgets/my_scaffold.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({Key? key}) : super(key: key);
-
+  static final Logger _logger = Logger();
   @override
   Widget build(BuildContext context) {
     final User user = FirebaseAuth.instance.currentUser!;
     TextStyle textstyle = const TextStyle(fontSize: 16);
-    return Scaffold(
-      appBar: AppBar(
-        leading: const MenuWidgetButton(),
-        title: const Text('User Profile'),
-      ),
+    return My_Scaffold(
+      title: const Text('Profile Page'),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -26,21 +25,11 @@ class ProfileWidget extends StatelessWidget {
             const Spacer(),
             Text('Name: ' + user.displayName.toString(), style: textstyle),
             Text('Email: ' + user.email.toString(), style: textstyle),
+            Text('UserID: ' + user.uid.toString()),
             const Spacer(),
           ],
         ),
       ),
     );
-  }
-}
-
-class MenuWidgetButton extends StatelessWidget {
-  const MenuWidgetButton({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-        onPressed: () => ZoomDrawer.of(context)!.toggle(),
-        icon: const Icon(Icons.menu));
   }
 }
